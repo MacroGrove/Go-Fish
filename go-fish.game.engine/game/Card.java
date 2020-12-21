@@ -23,10 +23,26 @@ public class Card {
 	 * @param value: 0-51
 	 * @throws Exception
 	 */
-	public Card(String suit, String face) {
-		this.suit = suit;
+	public Card(String face, String suit) {
 		this.face = face;
-		this.color = setColor();
+		this.suit = suit;
+		setColor();
+	}
+
+	public String getFace() {
+		return face;
+	}
+
+	public void setFace(String face) {
+		this.face = face;
+	}
+
+	public String getSuit() {
+		return suit;
+	}
+
+	public void setSuit(String suit) {
+		this.suit = suit;
 	}
 
 	/**
@@ -34,17 +50,47 @@ public class Card {
 	 * 
 	 * @throws Exception
 	 */
-	public String setColor() {
+	public void setColor() {
 
 		if (suit.equalsIgnoreCase("Diamonds") || suit.equalsIgnoreCase("Hearts")) {
 			color = "Red";
 		} else if (suit.equalsIgnoreCase("Clubs") || suit.equalsIgnoreCase("Spades")) {
 			color = "Black";
+		} else if (suit.equalsIgnoreCase("Duds")) {
+			color = "White";
 		} else {
 			System.err.println("Invalid suit!");
 		}
+	}
 
-		return color;
+	/**
+	 * 
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+
+		if (!(o instanceof Card)) {
+			return false;
+		}
+
+		Card c = (Card) o;
+
+		return this.face.equals(c.getFace()) && this.suit.equals(c.getSuit());
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 31 * result + face.hashCode();
+		result = 31 * result + suit.hashCode();
+
+		return result;
 	}
 
 	/**
